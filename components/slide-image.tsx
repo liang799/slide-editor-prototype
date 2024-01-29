@@ -35,7 +35,7 @@ export default function SlideImage() {
   return (
     <Draggable
       position={position}
-      onStop={(e, data) => setPosition({ x: data.x, y: data.y })}
+      onStop={handleDrag}
     >
       <Resizable
         size={size}
