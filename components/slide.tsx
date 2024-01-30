@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as fabric from 'fabric';
 
-export default function FabricJSCanvas() {
+export default function Slide() {
   const canvasEl = useRef<HTMLCanvasElement>(null);
   const imageUrl = 'https://buffer.com/library/content/images/2023/10/free-images.jpg'
 
