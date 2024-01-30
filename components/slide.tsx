@@ -8,7 +8,7 @@ export default function Slide() {
   const imageUrl = 'https://buffer.com/library/content/images/2023/10/free-images.jpg'
 
   useEffect(() => {
-    const canvas = new fabric.Canvas(canvasEl.current, {
+    const canvas = new fabric.Canvas(canvasEl.current!, {
       width: 0.7 * window.innerWidth,
       height: 0.83 * window.innerHeight,
     });
