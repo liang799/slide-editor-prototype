@@ -17,7 +17,7 @@ export default function Navbar() {
           </div>
           <div className="flex items-center">
             <div className="relative">
-              <input type="file" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" name="upload" id="upload" />
+              <input type="file" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" name="upload" id="upload" accept="image/*" />
               <label htmlFor="upload" className="bg-blue-500 text-white px-4 py-2 rounded-md cursor-pointer">Upload Image</label>
             </div>
           </div>
