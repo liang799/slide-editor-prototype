@@ -7,6 +7,7 @@ import { useRef, useState } from "react";
 
 export default function Home() {
   const [images, setImages] = useState<string[]>([]);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   function addImage(imageDataUri: string) {
     setImages(prevState => {
@@ -20,9 +21,9 @@ export default function Home() {
   return (
     <>
       <Navbar addImage={addImage} />
-      <SidePanel />
+      <SidePanel canvasRefs={[canvasRef]}/>
       <div className="h-90v p-4 mt-14 sm:ml-64">
-        <Slide images={images} />
+        <Slide images={images} canvasRef={canvasRef} />
       </div>
     </>
   );

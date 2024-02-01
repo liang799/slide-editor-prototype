@@ -1,15 +1,15 @@
-import React, { useEffect, useRef } from 'react';
+import React, { RefObject, useEffect, useRef } from 'react';
 import * as fabric from 'fabric';
 
 type SlideProps = {
   images: string[];
+  canvasRef: RefObject<HTMLCanvasElement>
 };
 
-export default function Slide({ images }: SlideProps) {
-  const canvasEl = useRef<HTMLCanvasElement>(null);
+export default function Slide({ images, canvasRef }: SlideProps) {
 
   useEffect(() => {
-    const canvas = new fabric.Canvas(canvasEl.current!, {
+    const canvas = new fabric.Canvas(canvasRef.current!, {
       width: 0.7 * window.innerWidth,
       height: 0.83 * window.innerHeight,
     });
@@ -38,15 +38,11 @@ export default function Slide({ images }: SlideProps) {
     };
   }, [images]);
 
-  const generateThumbnail = () => {
-    const canvas = canvasEl.current;
-    const imageData = canvas?.toDataURL('image/png');
-  };
 
   return (
     <canvas
       className="border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700"
-      ref={canvasEl}
+      ref={canvasRef}
     />
   );
 }
