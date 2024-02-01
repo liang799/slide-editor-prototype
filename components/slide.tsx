@@ -3,9 +3,13 @@
 import React, { useEffect, useRef } from 'react';
 import * as fabric from 'fabric';
 
-export default function Slide() {
+type SlideProps = {
+  images: string[]
+}
+
+export default function Slide({ images }: SlideProps) {
   const canvasEl = useRef<HTMLCanvasElement>(null);
-  const imageUrl = 'https://buffer.com/library/content/images/2023/10/free-images.jpg'
+  // const imageUrl = 'https://buffer.com/library/content/images/2023/10/free-images.jpg'
 
   useEffect(() => {
     const canvas = new fabric.Canvas(canvasEl.current!, {
@@ -13,28 +17,19 @@ export default function Slide() {
       height: 0.83 * window.innerHeight,
     });
 
-    fabric.FabricImage
-      .fromURL(imageUrl)
-      .then(img => {
-        img.scaleToHeight(50);
-        canvas.add(img);
-      });
-
-
-    const rect = new fabric.Rect({
-      left: 100,
-      top: 100,
-      width: 200,
-      height: 150,
-      fill: 'blue',
+    images.forEach(image => {
+      fabric.FabricImage
+        .fromURL(image)
+        .then(img => {
+          img.scaleToHeight(50);
+          canvas.add(img);
+        });
     });
-
-    canvas.add(rect);
 
     return () => {
       canvas.dispose();
     }
-  }, []);
+  }, [images]);
 
   const generateThumbnail = () => {
     const canvas = canvasEl.current;

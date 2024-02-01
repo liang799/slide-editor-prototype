@@ -1,4 +1,23 @@
-export default function Navbar() {
+import { ChangeEvent } from "react";
+
+type NavbarProps = {
+  addImage: (image: string) => void;
+}
+
+export default function Navbar({ addImage }: NavbarProps) {
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const imageDataUri = reader.result;
+      if (!imageDataUri) return;
+      addImage(imageDataUri.toString());
+    };
+    reader.readAsDataURL(file);
+  };
+
   return (
     <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
@@ -17,7 +36,7 @@ export default function Navbar() {
           </div>
           <div className="flex items-center">
             <div className="relative">
-              <input type="file" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" name="upload" id="upload" accept="image/*" />
+              <input type="file" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" name="upload" id="upload" accept="image/*" onChange={handleFileChange} />
               <label htmlFor="upload" className="bg-blue-500 text-white px-4 py-2 rounded-md cursor-pointer">Upload Image</label>
             </div>
           </div>
