@@ -1,15 +1,12 @@
-'use client'
-
 import React, { useEffect, useRef } from 'react';
 import * as fabric from 'fabric';
 
 type SlideProps = {
-  images: string[]
-}
+  images: string[];
+};
 
 export default function Slide({ images }: SlideProps) {
   const canvasEl = useRef<HTMLCanvasElement>(null);
-  // const imageUrl = 'https://buffer.com/library/content/images/2023/10/free-images.jpg'
 
   useEffect(() => {
     const canvas = new fabric.Canvas(canvasEl.current!, {
@@ -17,18 +14,28 @@ export default function Slide({ images }: SlideProps) {
       height: 0.83 * window.innerHeight,
     });
 
-    images.forEach(image => {
+    const resizeHandler = () => {
+      canvas.setDimensions({
+        width: 0.7 * window.innerWidth,
+        height: 0.83 * window.innerHeight,
+      });
+    };
+
+    window.addEventListener('resize', resizeHandler);
+
+    images.forEach((image) => {
       fabric.FabricImage
         .fromURL(image)
         .then(img => {
           img.scaleToHeight(50);
           canvas.add(img);
-        });
+        })
     });
 
     return () => {
+      window.removeEventListener('resize', resizeHandler);
       canvas.dispose();
-    }
+    };
   }, [images]);
 
   const generateThumbnail = () => {
@@ -37,6 +44,9 @@ export default function Slide({ images }: SlideProps) {
   };
 
   return (
-    <canvas className="border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700" ref={canvasEl} />
+    <canvas
+      className="border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700"
+      ref={canvasEl}
+    />
   );
-};
+}
